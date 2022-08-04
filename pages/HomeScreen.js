@@ -1,7 +1,7 @@
 import React, {Component} from "react";
-
+import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
 import { LinearGradient } from 'expo-linear-gradient';
-
+import Footer from '../components/Footer'
 import {
     Text,
     Link,
@@ -55,13 +55,11 @@ export default function HomeScreen({route, navigation}){
             _light={{ bg: "blueGray.50" }}
             px={4}
             flex={1}
-
+            pt = {5}
           >
             
+              {!LOGGED_IN ? <Pressable onPress={() => navigation.navigate("Account")} ><Heading size = "lg" marginTop={10} marginBottom = {5}> Welcome, <Text color= 'lightBlue.800'>Login Here!</Text></Heading></Pressable> : <Pressable><Heading size = "lg" marginTop={10} marginBottom = {5}> Hello <Text color= 'lightBlue.800'>{displayUserName} </Text></Heading></Pressable>}
             <HStack>
-              <Heading size = "lg" marginTop={10} marginBottom = {5}> Welcome, <Text color= 'lightBlue.800'>{displayUserName}</Text> </Heading>
-              <Spacer/>
-              {!LOGGED_IN? <Button my = {9} px = {12}   onPress = { () => {navigation.navigate('Login'); }}>Login</Button> : <Button my = {9} px = {12}   onPress = { () => {navigation.navigate('Account'); }}>Account</Button> }
               
               
 
@@ -79,21 +77,7 @@ export default function HomeScreen({route, navigation}){
               </Box>
           </Pressable>
           <Spacer/>
-          <Box>
-            <Pressable rounded = "xl" bg = "blueGray.50" margin = {0} onPress={() => navigation.navigate('Settings')}>
-                <Box bg = {{linearGradient: {colors: ['pink.300', 'violet.800'],start: [0,0],end:[1,0]}}}
-                p = "12" rounded = "xl" _text = {{
-                  fontSize: '2xl',
-                  fontWeight: "medium",
-                  color: 'warmGray.50',
-                  textAlign: 'center'
-                }}> 
-                Settings
-                </Box>
-            </Pressable>
-          </Box>  
 
-          <Spacer/>
           <Box>
             <Pressable rounded = "xl" bg = "blueGray.50" margin = {0} onPress={() => navigation.navigate('Guide')}>
                 <Box bg = {{linearGradient: {colors: ['pink.300', 'violet.800' ],start: [0,0],end:[1,0]}}}
@@ -126,6 +110,7 @@ export default function HomeScreen({route, navigation}){
 
 
           </VStack>
+          
         </NativeBaseProvider>
   );
 };
