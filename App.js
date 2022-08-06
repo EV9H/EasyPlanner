@@ -2,12 +2,15 @@ import React, {Component} from "react";
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import MainContainer from "./pages/MainContainer";
-
+import SSRProvider from 'react-bootstrap/SSRProvider';
 
 
 export default function App() {
   return (
-    <MainContainer/>
+    <SSRProvider>
+        <MainContainer/>
+    </SSRProvider>
+
   );
 }
 
