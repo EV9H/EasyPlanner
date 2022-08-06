@@ -1,6 +1,6 @@
 import React, {Component} from "react";
 import { TouchableOpacity} from "react-native";
-
+import { AntDesign } from "@expo/vector-icons";
 import {
   Text,
   Link,
@@ -17,6 +17,8 @@ import {
   Spacer,
   useSafeArea,
   Avatar,
+  Fab,
+  Icon,
   
 } from "native-base";
 
@@ -26,26 +28,33 @@ import {SafeAreaView} from 'react-native-safe-area-context';
 
 export default function PlanScreen({navigation}){
     const [items, setItems] = React.useState({});
+    const [content, setContent] = React.useState("");
+    const [selectedDay, setSelectedDay] = React.useState("");
+
     const timeToString = (time) => {
       const date = new Date(time);
       return date.toISOString().split('T')[0];
     }
+
+    const addItem = (day) =>{
+
+    }
+
     const loadItems = (day) =>{
       const items = items || {};
-  
       setTimeout(() => {
-        for (let i = -15; i < 85; i++) {
+        for (let i = -5; i < 85; i++) {
           const time = day.timestamp + i * 24 * 60 * 60 * 1000;
           const strTime = timeToString(time);
   
           if (!items[strTime]) {
             items[strTime] = [];
             
-            const numItems = Math.floor(Math.random() * 3 + 1);
+            const numItems = Math.floor(1);
             for (let j = 0; j < numItems; j++) {
               items[strTime].push({
                 name: 'Item for ' + strTime + ' #' + j,
-                height: Math.max(50, Math.floor(Math.random() * 150)),
+                height: 100,
                 day: strTime
               });
             }
@@ -57,6 +66,7 @@ export default function PlanScreen({navigation}){
         });
         setItems(newItems);
       }, 1000);
+      
     }
     
     const renderItem =(item) =>{
@@ -70,7 +80,7 @@ export default function PlanScreen({navigation}){
                 <Text>
                   {item.name}
                 </Text>
-                <Avatar bg="blue.500">
+                <Avatar bg="blue.400">
                 HH
                </Avatar>
               </Box>
@@ -86,17 +96,19 @@ export default function PlanScreen({navigation}){
             <Agenda 
               items = {items}
               loadItemsForMonth={loadItems} 
-              selected = {'2022-05-05'} 
+              selected = {'2022-07-05'} 
               renderItem = {renderItem}
+              onDayPress={day => {
+                console.log( day.dateString + 'day pressed');
+              }}
+              onDayChange={day => {
+                console.log( day.dateString + 'day changed');
+              }}
             />
 
-
+            <Fab onPress={()=>{}} renderInPortal={false} shadow={5} size="sm" icon={<Icon color="white" as={AntDesign} name="plus" size="sm" />} />
            </Box>
 
-          
-
-          
-          
         </Box>
         
       </NativeBaseProvider>

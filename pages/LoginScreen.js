@@ -20,6 +20,7 @@ import {
     Icon,
     Stack,
     Spacer,
+    KeyboardAvoidingView,
 } from "native-base";
 import { Pressable } from "react-native";
 
@@ -37,7 +38,10 @@ export default function LoginScreen({navigation}){
     const [password, setPassword] = React.useState("");
     const [show, setShow] = React.useState(false);
     return (
+        
         <NativeBaseProvider config={config}>
+            <KeyboardAvoidingView behavior="padding" >
+
                 <Box bg = {{linearGradient: {colors: ['red.300', 'violet.800'],start: [0,0],end:[1,0]}}} flex = {1}>
                 <VStack space={10} w="100%" alignItems="center" py = "50%">
                     <Heading textAlign={"center"} color = "white"> Login</Heading>
@@ -47,7 +51,7 @@ export default function LoginScreen({navigation}){
                         placeholder="Name" 
                         placeholderTextColor = "white"
                         onChangeText={(text) => setUserName(text)}
-                    />
+                        />
 
                     <Input w={{base: "75%",md: "25%"}} 
                         type={show ? "text" : "password"} 
@@ -58,17 +62,18 @@ export default function LoginScreen({navigation}){
                         onChangeText={(text) => setPassword(text)}
                         />
                     
-                    <HStack space = {10} alignSelf = "center"> 
+                    <VStack space = {10} alignSelf = "center" flexDirection={"column"}> 
                         <Button backgroundColor = 'rgba(255, 255, 255, 0.1)' onPress={()=> {alert("Logged In! "); navigation.navigate("Home", {userName: userName})}}> Login </Button>
                         
-                        <Button backgroundColor = 'rgba(255, 255, 255, 0.1)' onPress={()=> {alert("Signup Attempted")}}> Signup </Button>
-                    </HStack>
+                        <Button backgroundColor = 'rgba(255, 255, 255, 0.1)' onPress={()=> {alert("Signup Attempted")}}> Sign Up </Button>
+                    </VStack>
                 </VStack>
 
                 </Box>
                 
 
 
+            </KeyboardAvoidingView>
         </NativeBaseProvider>
     );
 };

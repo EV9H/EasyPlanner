@@ -36,8 +36,8 @@ export default function HomeScreen({route, navigation}){
   const [loggedIn, setLoggedIn] = React.useState(false)
 
   if( route.params == null){
-     displayUserName = "Login->"
-     
+     displayUserName = "Login to view your plans"
+     LOGGED_IN = false
   }else{
     const {userName} = route.params
     displayUserName = userName 

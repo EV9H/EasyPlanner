@@ -3,6 +3,7 @@ import React, {Component} from "react";
 import { LinearGradient } from 'expo-linear-gradient';
 import { MaterialIcons } from "@expo/vector-icons";
 
+import { auth } from '../firebase'
 import {
     Text,
     Link,
@@ -23,6 +24,7 @@ import {
 } from "native-base";
 import { Pressable } from "react-native";
 
+
 const config = {
     useSystemColorMode: false,
     initialColorMode: "dark",
@@ -36,6 +38,48 @@ export default function LoginScreen({navigation}){
     const [userName, setUserName] = React.useState("");
     const [password, setPassword] = React.useState("");
     const [show, setShow] = React.useState(false);
+    const [loggedIn, setLoggedIn] = React.useState(false);
+    // React.useEffect(()=>{
+    //     const unsubscribe = auth.onAuthStateChanged(user => {
+    //         if(user) {
+
+    //             navigation.navigate("Home", {userName: userName})
+
+    //         }
+    //     })
+    //     return unsubscribe
+    // }, [])
+
+    const handleSignUp = () => {
+        auth
+            .createUserWithEmailAndPassword(userName,password)
+            .then(userCredentials =>{
+                
+                alert("Account Created!")
+            })
+            .catch(error => alert(error.message))
+    }
+
+    const handleLogin =() => {
+        auth
+        .signInWithEmailAndPassword(userName, password)
+        .then(userCredentials =>{
+
+            setLoggedIn(true);
+            navigation.navigate("Home", {userName: userName})
+        })
+        .catch(error => alert(error.message))
+    }
+    
+    const handleSignOut = () => {
+        auth
+        .signOut()
+        .then(()=>{
+            navigation.navigate("Home")
+            setLoggedIn(false)
+        })
+        .catch(error => alert(error.message))
+    }
     return (
         <NativeBaseProvider config={config}>
                 <Box bg = {{linearGradient: {colors: ['red.300', 'violet.800'],start: [0,0],end:[1,0]}}} flex = {1}>
@@ -58,11 +102,13 @@ export default function LoginScreen({navigation}){
                         onChangeText={(text) => setPassword(text)}
                         />
                     
-                    <HStack space = {10} alignSelf = "center"> 
-                        <Button backgroundColor = 'rgba(255, 255, 255, 0.1)' onPress={()=> {alert("Logged In! "); navigation.navigate("Home", {userName: userName})}}> Login </Button>
+                    <VStack space = {8} alignSelf = "center" width={"70%"} mt = {1}> 
+                        <Button backgroundColor = 'rgba(255, 255, 255, 0.1)' onPress={handleLogin}> Login </Button>
                         
-                        <Button backgroundColor = 'rgba(255, 255, 255, 0.1)' onPress={()=> {alert("Signup Attempted")}}> Signup </Button>
-                    </HStack>
+                        <Button backgroundColor = 'rgba(255, 255, 255, 0.1)' onPress={handleSignUp}> Register </Button>
+
+                        {loggedIn ? <Button backgroundColor = 'rgba(255, 125, 125, 0.1)' onPress={handleSignOut}> Sign Out </Button> : null}
+                    </VStack>
                 </VStack>
 
                 </Box>
@@ -71,5 +117,6 @@ export default function LoginScreen({navigation}){
 
         </NativeBaseProvider>
     );
+    
 };
 
