@@ -34,17 +34,24 @@ const config = {
   };
 export const theme = extendTheme({ config });
 
-export default function LoginScreen({navigation}){
+const InfoScreen = () => {
+    return(
+        <NativeBaseProvider config = {config}>
+            <Box flex = {1}>Hi</Box>
+        </NativeBaseProvider>
+    )
+}
+
+export default function AccountScreen({navigation}){
     const [userName, setUserName] = React.useState("");
+    const [nickname, setNickname] = React.useState("");
     const [password, setPassword] = React.useState("");
     const [show, setShow] = React.useState(false);
     const [loggedIn, setLoggedIn] = React.useState(false);
     // React.useEffect(()=>{
     //     const unsubscribe = auth.onAuthStateChanged(user => {
     //         if(user) {
-
     //             navigation.navigate("Home", {userName: userName})
-
     //         }
     //     })
     //     return unsubscribe
@@ -80,9 +87,34 @@ export default function LoginScreen({navigation}){
         })
         .catch(error => alert(error.message))
     }
+
+    const handleSetNickname = () =>  {
+       console.log('Save User Name: ' + nickname) 
+    }
+    
+
     return (
         <NativeBaseProvider config={config}>
-                <Box bg = {{linearGradient: {colors: ['red.300', 'violet.800'],start: [0,0],end:[1,0]}}} flex = {1}>
+            {loggedIn 
+            ?<Box bg = {{linearGradient: {colors: ['red.300', 'violet.800'],start: [0,0],end:[1,0]}}} flex = {1}>
+                <VStack space={10} w="100%" alignItems="center" py = "50%">
+                    <Heading textAlign={"center"} color = "white"> Account Information</Heading>
+                    <HStack space={10}>
+                        <Text color = "white" fontSize="lg">Username</Text>
+                        <Input w={{base: "50%",md: "25%"}} 
+                            type={show ? "text" : "username"} 
+                            placeholder= {nickname ? nickname : "Type the nickname you like" }
+                            placeholderTextColor = "white"
+                            onChangeText={(text) => setNickname(text)}
+                            />
+                    </HStack>
+                    
+                    <Button color = "rgba(1,1,1,100)" onPress = {handleSetNickname} ><Text>Save</Text></Button>
+                    
+                </VStack>
+            </Box>           
+            
+            :<Box bg = {{linearGradient: {colors: ['red.300', 'violet.800'],start: [0,0],end:[1,0]}}} flex = {1}>
                 <VStack space={10} w="100%" alignItems="center" py = "50%">
                     <Heading textAlign={"center"} color = "white"> Login</Heading>
                     <Input w={{base: "75%",md: "25%"}} 
@@ -111,12 +143,16 @@ export default function LoginScreen({navigation}){
                     </VStack>
                 </VStack>
 
-                </Box>
+                </Box>           
+            }
+                
                 
 
 
         </NativeBaseProvider>
     );
+
+    
     
 };
 

@@ -11,7 +11,6 @@ import PlanScreen from "./PlanScreen"
 import GuideScreen from "./GuideScreen"
 import About from './About'
 import SettingScreen from './SettingScreen'
-import LoginScreen from './LoginScreen'
 import AccountScreen from './AccountScreen'
 
 // Screen Names 

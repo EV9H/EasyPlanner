@@ -74,14 +74,14 @@ export default function PlanScreen({navigation}){
           if (!newItems[strTime]) {
             newItems[strTime] = [];
             
-            const numItems = Math.floor(1);
-            for (let j = 0; j < numItems; j++) {
-              items[strTime].push({
-                name: 'Item for ' + strTime + ' #' + j,
-                height: 100,
-                day: strTime
-              });
-            }
+            // const numItems = Math.floor(1);
+            // for (let j = 0; j < numItems; j++) {
+            //   items[strTime].push({
+            //     name: 'Item for ' + strTime + ' #' + j,
+            //     height: 100,
+            //     day: strTime
+            //   });
+            // }
           }
         }
         Object.keys(items).forEach(key => {
